@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp">
+
+    <ImageView
+        android:src="@drawable/see"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitXY"
+        android:layout_height="60dp" />
+    <TextView
+        android:layout_marginTop="15dp"
+        android:id="@+id/trailer_text"
+        android:layout_width="0dp"
+        android:layout_weight="4"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_height="wrap_content" />
+</LinearLayout>
