@@ -7,9 +7,15 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import butterknife.InjectView;
+
 public class TrailerAdapter extends BaseAdapter {
     private Context context;
     ArrayList<String> data;
+
+    @InjectView(R.id.trailer_text)TextView trailer_txt;
+
     TrailerAdapter(Context context, ArrayList<String> data){
         this.context = context;
         this.data = data;
@@ -35,7 +41,6 @@ public class TrailerAdapter extends BaseAdapter {
         if (view == null) {
             view = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_item_trailer,viewGroup, false);
         }
-        TextView trailer_txt= (TextView) view.findViewById(R.id.trailer_text);
         trailer_txt.setText("Trailer "+ (i+1));
         return view;
     }

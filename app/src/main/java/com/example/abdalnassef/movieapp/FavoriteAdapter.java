@@ -31,6 +31,13 @@ public class FavoriteAdapter {
         sqLiteDatabase.close();
         return id;
     }
+    public void RemoveFav(String id) {
+        SQLiteDatabase sqLiteDatabase = favDbHelper.getWritableDatabase();
+
+        sqLiteDatabase.delete(favDbHelper.TABLE_NAME,favDbHelper.POSTER_ID+"=?",new String[]{id});
+
+        sqLiteDatabase.close();
+    }
     public Movie[] AllFav(){
         int i =0;
         SQLiteDatabase db2= favDbHelper.getWritableDatabase();

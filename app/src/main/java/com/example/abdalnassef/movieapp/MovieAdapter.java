@@ -9,9 +9,13 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.InjectView;
+
 public class MovieAdapter extends BaseAdapter {
     Context context;
     Movie[] movie;
+
+    @InjectView(R.id.list_item_movie_imageView)ImageView imgView;
 
     public MovieAdapter(Context context, Movie[] movie) {
         this.context = context;
@@ -38,7 +42,6 @@ public class MovieAdapter extends BaseAdapter {
         if (view == null) {
             view = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_item_movie, viewGroup, false);
         }
-        ImageView imgView = (ImageView) view.findViewById(R.id.list_item_movie_imageView);
         String baseUrl = "http://image.tmdb.org/t/p/w185";
         String poster_url = baseUrl + movie[i].getPoster_url();
         Picasso.with(context).load(poster_url).into(imgView);

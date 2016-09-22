@@ -32,7 +32,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class DetailActivityFragment extends Fragment {
+
     private TextView Overview;
     Intent back;
     static String poster_url;
@@ -49,13 +53,21 @@ public class DetailActivityFragment extends Fragment {
     static View view;
     static Context context;
 
-    public DetailActivityFragment() {
-    }
+//    @InjectView(R.id.favorite) final Button favorite = null;
+
+//    @InjectView(R.id.trailer_view) private GridView trailergGridView;
+//    @InjectView(R.id.movie_overview_text) private TextView Overview;
+    @InjectView(R.id.movie_image) ImageView poster;
+    @InjectView(R.id.movie_name_text) TextView t_title;
+    @InjectView(R.id.movie_date_text) TextView t_date;
+    @InjectView(R.id.movie_averge_text) TextView t_vote;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_detail, container, false);
+        ButterKnife.inject(this, view);
         context = getActivity();
 
         if (land) {
@@ -71,15 +83,16 @@ public class DetailActivityFragment extends Fragment {
             task.execute(id);
             MovieTask3 task2 = new MovieTask3();
             task2.execute(id);
-            ImageView poster = (ImageView) view.findViewById(R.id.movie_image);
+//            ImageView poster = (ImageView) view.findViewById(R.id.movie_image);
             String baseUrl = "http://image.tmdb.org/t/p/w185";
             poster_url = baseUrl + poster_url;
             Picasso.with(getActivity()).load(poster_url).into(poster);
-            TextView titel = ((TextView) view.findViewById(R.id.movie_name_text));
-            titel.setText(title);
-            TextView date = ((TextView) view.findViewById(R.id.movie_date_text));
-            date.setText(DetailActivityFragment.date);
-            TextView vote = ((TextView) view.findViewById(R.id.movie_averge_text));
+//            TextView t_title = ((TextView) view.findViewById(R.id.movie_name_text));
+            t_title.setText(title);
+//            TextView t_date = ((TextView) view.findViewById(R.id.movie_date_text));
+            t_date.setText(DetailActivityFragment.date);
+//            TextView t_vote = ((TextView) view.findViewById(R.id.movie_averge_text));
+            t_vote.setText(DetailActivityFragment.vote);
             Overview = ((TextView) view.findViewById(R.id.movie_overview_text));
             Overview.setText(overview_string);
             final Button favorite = (Button) view.findViewById(R.id.favorite);
@@ -110,7 +123,8 @@ public class DetailActivityFragment extends Fragment {
             } else
                 Toast.makeText(context, "Error In Insert Data", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Favorite Already", Toast.LENGTH_SHORT).show();
+            favoriteAdapter.RemoveFav(id);
+            Toast.makeText(context, "Favorite Removed", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -176,16 +190,12 @@ public class DetailActivityFragment extends Fragment {
             }
 
             try {
-                Log.d("message", "data");
-
-                return getDataFromJson(JsonStr);
+               return getDataFromJson(JsonStr);
             } catch (JSONException e) {
                 Log.e("error", e.getMessage(), e);
                 e.printStackTrace();
             }
-
-            Log.d("message", "null");
-            return null;
+                return null;
         }
 
         @Override
@@ -224,7 +234,6 @@ public class DetailActivityFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
 
-            Log.d("message", "message");
             String FORECAST_BASE_URL =
                     "http://api.themoviedb.org/3/movie/" + params[0] + "/reviews?";
 
