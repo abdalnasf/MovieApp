@@ -33,7 +33,6 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class DetailActivityFragment extends Fragment {
 
@@ -57,10 +56,10 @@ public class DetailActivityFragment extends Fragment {
 
 //    @InjectView(R.id.trailer_view) private GridView trailergGridView;
 //    @InjectView(R.id.movie_overview_text) private TextView Overview;
-    @InjectView(R.id.movie_image) ImageView poster;
-    @InjectView(R.id.movie_name_text) TextView t_title;
-    @InjectView(R.id.movie_date_text) TextView t_date;
-    @InjectView(R.id.movie_averge_text) TextView t_vote;
+//    @InjectView(R.id.movie_image) ImageView poster;
+//    @InjectView(R.id.movie_name_text) TextView t_title;
+//    @InjectView(R.id.movie_date_text) TextView t_date;
+//    @InjectView(R.id.movie_averge_text) TextView t_vote;
 
 
     @Override
@@ -83,15 +82,15 @@ public class DetailActivityFragment extends Fragment {
             task.execute(id);
             MovieTask3 task2 = new MovieTask3();
             task2.execute(id);
-//            ImageView poster = (ImageView) view.findViewById(R.id.movie_image);
+            ImageView poster = (ImageView) view.findViewById(R.id.movie_image);
             String baseUrl = "http://image.tmdb.org/t/p/w185";
             poster_url = baseUrl + poster_url;
             Picasso.with(getActivity()).load(poster_url).into(poster);
-//            TextView t_title = ((TextView) view.findViewById(R.id.movie_name_text));
+            TextView t_title = ((TextView) view.findViewById(R.id.movie_name_text));
             t_title.setText(title);
-//            TextView t_date = ((TextView) view.findViewById(R.id.movie_date_text));
+            TextView t_date = ((TextView) view.findViewById(R.id.movie_date_text));
             t_date.setText(DetailActivityFragment.date);
-//            TextView t_vote = ((TextView) view.findViewById(R.id.movie_averge_text));
+            TextView t_vote = ((TextView) view.findViewById(R.id.movie_averge_text));
             t_vote.setText(DetailActivityFragment.vote);
             Overview = ((TextView) view.findViewById(R.id.movie_overview_text));
             Overview.setText(overview_string);
