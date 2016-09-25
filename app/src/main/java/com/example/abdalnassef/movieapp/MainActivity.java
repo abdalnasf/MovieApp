@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     String id,title,overview;
     static View fragDetail;
     static String currentState = "popular?";
-
+public static Movie imovie=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,11 +99,13 @@ public class MainActivity extends AppCompatActivity {
             largeScreen = false;
             DetailActivityFragment.land = false;
         }
+
         fragmentTransaction.commit();
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                imovie=movie[i];
                 if (!largeScreen) {
                     Intent Deatail = new Intent(context, DetailActivity.class);
                     Deatail.putExtra("poster_url", movie[i].getPoster_url());
@@ -512,5 +514,42 @@ public class MainActivity extends AppCompatActivity {
             return review;
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(imovie!=null){
+            title = imovie.getTitel();
+            String date = imovie.getDate();
+            String vote = imovie.getVote();
+            overview = imovie.getOverview();
+            id = imovie.getId();
+            fragDetail.setVisibility(View.VISIBLE);
+            String baseUrl = "http://image.tmdb.org/t/p/w185";
+            String poster_url = baseUrl + imovie.getPoster_url();
+            DetailActivityFragment.poster_url = poster_url;
+            DetailActivityFragment.title = title;
+            DetailActivityFragment.date = date;
+            DetailActivityFragment.overview_string = overview;
+            DetailActivityFragment.id = id;
+            Picasso.with(context).load(poster_url).into(poster);
+            titel.setText(title);
+            date_text.setText(date);
+            vote_text.setText(vote);
+
+            trailergGridView = (GridView) findViewById(R.id.trailer_view);
+            MovieTask2 task = new MovieTask2();
+            task.execute(id);
+            MovieTask3 task2 = new MovieTask3();
+            task2.execute(id);
+            trailergGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(movieArrayList.get(i))));
+                }
+            });
+
+        }
     }
 }
